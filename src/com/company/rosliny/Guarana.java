@@ -13,6 +13,7 @@ public class Guarana extends Roslina {
     {
         super(Typ.GUARANA, swiat, pozycja, turaUrodzenia, GUARANA_SILA, GUARANA_INICJATYWA);
         setKolor(new Color(210, 116, 139));
+        setSzansaRozmnazania(0.1);
     }
 
     @Override

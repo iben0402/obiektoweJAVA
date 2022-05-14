@@ -11,7 +11,7 @@ public abstract class Zwierze extends Organizm{
                    Punkt pozycja, int turaUrodzenia, int sila, int inicjatywa) {
         super(typ, swiat, pozycja, turaUrodzenia, sila, inicjatywa);
         setCzyRozmnazalSie(false);
-        setSzansaRozmnazania(0.5);
+        setSzansaRozmnazania(0.25);
     }
 
     @Override

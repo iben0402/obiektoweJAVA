@@ -1,8 +1,11 @@
 package com.company;
 
 import com.company.zwierzeta.Czlowiek;
+import com.company.zwierzeta.Zolw;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -119,20 +122,20 @@ public class GUI implements ActionListener, KeyListener {
                     else if(tmpUmiejetnosc.isCzyJestAktywna())
                     {
                         Komentarze.DodajKomentarz("Umiejetnosc jest juz aktywna. Pozostaly czas trwania: " + tmpUmiejetnosc.getCzasTrwania() + " tur.");
-                        //TODO komentatorGraf
-                        return
+                        komentator.odswiezKomentarze();
+                        return;
                     }
                     else
                     {
                         Komentarze.DodajKomentarz("Umiejetnosc mozna aktywowac za " + tmpUmiejetnosc.getCooldown() + " tur");
-                        //TODO komentatorGraf
+                        komentator.odswiezKomentarze();
                         return;
                     }
                 }
                 else
                 {
                     Komentarze.DodajKomentarz("!!! Zly symbol, sprobuj ponownie !!!");
-                    //TODO komentatorGraf
+                    komentator.odswiezKomentarze();
                     return;
                 }
             }
@@ -141,13 +144,13 @@ public class GUI implements ActionListener, KeyListener {
                     keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_P))
             {
                 Komentarze.DodajKomentarz("CZLOWIEK NIE ZYJE, NIE MOZESZ NIM JUZ STEROWAC");
-                //TODO komentatorGraf
+                komentator.odswiezKomentarze();
                 return;
             }
             else
             {
                 Komentarze.DodajKomentarz("!!! Zly symbol, sprobuj ponownie !!!");
-                //TODO komentatorGraf
+                komentator.odswiezKomentarze();
                 return;
             }
             Komentarze.WyczyscKomentarz();
@@ -312,11 +315,49 @@ public class GUI implements ActionListener, KeyListener {
             add(sp);
         }
 
-        public void odswiezKomentarzy() {
+        public void odswiezKomentarze() {
             tekst = info + Komentarze.getTekst();
             textArea.setText(tekst);
         }
     }
+
+    private class ListaOrg extends JFrame {
+            private String[] listaOrg;
+            private Organizm.Typ[] typOrgList;
+            private JList jList;
+
+            public ListaOrg(int x, int y, Punkt punkt)
+            {
+                super("Lista organizmow");
+                setBounds(x, y, 100, 300);
+                listaOrg = new String[]{"Barszcz Sosnowskiego", "Guarana", "Mlecz", "Trawa", "Wilcze Jagody", "Antylopa", "Lis", "Owca", "Wilk", "Zolw"};
+                typOrgList = new Organizm.Typ[]{Organizm.Typ.BARSZCZ_SOSNOWSKIEGO, Organizm.Typ.GUARANA,
+                        Organizm.Typ.MLECZ, Organizm.Typ.TRAWA, Organizm.Typ.WILCZE_JAGODY, Organizm.Typ.ANTYLOPA,
+                        Organizm.Typ.LIS, Organizm.Typ.OWCA, Organizm.Typ.WILK, Organizm.Typ.ZOLW};
+
+                jList = new JList(listaOrg);
+                jList.setVisibleRowCount(listaOrg.length);
+                jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                jList.addSelectionInterval(new ListSelectionListener() {
+                       @Override
+                       public void valueChanged(ListSelectionEvent e) {
+                           Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(typOrgList[jList.getSelectedIndex()], swiat, punkt);
+                           swiat.DodajOrganizm(tmpOrganizm);
+                           Komentarze.DodajKomentarz("Stworzono nowy organizm " + tmpOrganizm.OrganizmToString());
+                           odswiezSwiat();
+                           dispose();
+                       }
+                   }
+
+                );
+
+                JScrollPane sp = new JScrollPane(jList);
+                add(sp);
+
+                setVisible(true);
+            }
+    }
+
 
 
 }

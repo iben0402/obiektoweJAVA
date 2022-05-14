@@ -200,7 +200,7 @@ public class GUI implements ActionListener, KeyListener {
                                 PolePlanszy tmpPole = (PolePlanszy) e.getSource();
                                 if(tmpPole.isEmpty == true)
                                 {
-                                    ListaOrganizmow listaOrganizmow = new ListaOrganizmow(tmpPole.getX() + jframe.getX(),
+                                    ListaOrg listaOrganizmow = new ListaOrg(tmpPole.getX() + jframe.getX(),
                                             tmpPole.getY() +jframe.getY(), new Punkt(tmpPole.getPozX(), tmpPole.getPozY()));
                                 }
 
@@ -338,7 +338,7 @@ public class GUI implements ActionListener, KeyListener {
                 jList = new JList(listaOrg);
                 jList.setVisibleRowCount(listaOrg.length);
                 jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                jList.addSelectionInterval(new ListSelectionListener() {
+                jList.addListSelectionListener(new ListSelectionListener() {
                        @Override
                        public void valueChanged(ListSelectionEvent e) {
                            Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(typOrgList[jList.getSelectedIndex()], swiat, punkt);
@@ -358,6 +358,92 @@ public class GUI implements ActionListener, KeyListener {
             }
     }
 
+    private class Oznaczenia extends JPanel
+    {
+        private final int ILOSC_TYPOW = 11;
+        private JButton[] jButtons;
+
+        public Oznaczenia()
+        {
+            super();
+            setBounds(mainPanel.getX()+ODST, mainPanel.getHeight() *5/6 + ODST, mainPanel.getWidth() - ODST*2, mainPanel.getHeight()/6 - 2*ODST);
+            setBackground(Color.WHITE);
+            setLayout(new FlowLayout(FlowLayout.CENTER));
+
+            jButtons = new JButton[ILOSC_TYPOW];
 
 
+            jButtons[0] = new JButton("Barszcz Sosnowskiego");
+            jButtons[0].setBackground(new Color(82, 94, 43));
+
+            jButtons[1] = new JButton("Guarana");
+            jButtons[1].setBackground(new Color(210, 116, 139));
+
+            jButtons[2] = new JButton("Mlecz");
+            jButtons[2].setBackground(new Color(232, 226, 130));
+
+            jButtons[3] = new JButton("Trawa");
+            jButtons[3].setBackground(new Color(126, 213, 127));
+
+            jButtons[4] = new JButton("Wilcze jagody");
+            jButtons[4].setBackground(new Color(121, 63, 178));
+
+            jButtons[5] = new JButton("Antylopa");
+            jButtons[5].setBackground(new Color(208, 180, 143));
+
+            jButtons[6] = new JButton("Czlowiek");
+            jButtons[6].setBackground(Color.MAGENTA);
+
+            jButtons[7] = new JButton("Lis");
+            jButtons[7].setBackground(new Color(203, 122, 59));
+
+            jButtons[8] = new JButton("Owca");
+            jButtons[8].setBackground(new Color(103, 103, 103));
+
+            jButtons[9] = new JButton("Wilk");
+            jButtons[9].setBackground(new Color(49, 32, 32));
+
+            jButtons[10] = new JButton("Zolw");
+            jButtons[10].setBackground(new Color(9, 58, 9));
+
+            for (int i = 0; i < ILOSC_TYPOW; i++) {
+                jButtons[i].setEnabled(false);
+                add(jButtons[i]);
+            }
+        }
+    }
+
+
+    private void startGame() {
+            plansza = new PlanszaGraphics(swiat);
+            mainPanel.add(plansza);
+
+            komentator = new KomentatorGraphics();
+            mainPanel.add(komentator);
+
+            oznaczenia = new Oznaczenia();
+            mainPanel.add(oznaczenia);
+
+            odswiezSwiat();
+    }
+
+    public void odswiezSwiat()
+    {
+        plansza.odswiezPlansze();
+        komentator.odswiezKomentarze();
+        SwingUtilities.updateComponentTreeUI(jframe);
+        jframe.requestFocusInWindow();
+    }
+
+    public PlanszaGraphics getPlansza() {
+        return plansza;
+    }
+
+    public KomentatorGraphics getKomentator() {
+        return komentator;
+    }
+
+    public Swiat getSwiat() {
+        return swiat;
+    }
 }

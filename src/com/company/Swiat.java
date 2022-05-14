@@ -74,7 +74,35 @@ public class Swiat {
         }
     }
 
-    //TODO WykonajTure()
+    public void WykonajTure()
+    {
+        if(koniec) return;
+        tura++;
+        Komentarze.DodajKomentarz("\nTURA " + tura);
+
+        System.out.println(tura + " ");
+        System.out.println(organizmy.size() + "\n");
+
+        SortujOrganizmy();
+        for (int i = 0; i < organizmy.size(); i++) {
+            if(organizmy.get(i).getTuraUrodzenia() != tura && organizmy.get(i).isCzyUmarl() == false)
+            {
+                organizmy.get(i).Akcja();
+            }
+        }
+
+        for (int i = 0; i < organizmy.size(); i++) {
+            if(organizmy.get(i).isCzyUmarl()==true)
+            {
+                organizmy.remove(i);
+                i--;
+            }
+        }
+
+        for (int i = 0; i < organizmy.size(); i++) {
+            organizmy.get(i).setCzyRozmnazalSie(false);
+        }
+    }
 
     private void SortujOrganizmy() {
         Collections.sort(organizmy, new Comparator<Organizm>() {

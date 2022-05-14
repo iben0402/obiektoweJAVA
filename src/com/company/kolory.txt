@@ -1,0 +1,32 @@
+            jButtons[0] = new JButton("Barszcz Sosnowskiego");
+            jButtons[0].setBackground(new Color(82, 94, 43));
+
+            jButtons[1] = new JButton("Guarana");
+            jButtons[1].setBackground(new Color(210, 116, 139));
+
+            jButtons[2] = new JButton("Mlecz");
+            jButtons[2].setBackground(new Color(232, 226, 130));
+
+            jButtons[3] = new JButton("Trawa");
+            jButtons[3].setBackground(new Color(126, 213, 127));
+
+            jButtons[4] = new JButton("Wilcze jagody");
+            jButtons[4].setBackground(new Color(121, 63, 178));
+
+            jButtons[5] = new JButton("Antylopa");
+            jButtons[5].setBackground(new Color(208, 180, 143));
+
+            jButtons[6] = new JButton("Czlowiek");
+            jButtons[6].setBackground(Color.MAGENTA);
+
+            jButtons[7] = new JButton("Lis");
+            jButtons[7].setBackground(new Color(203, 122, 59));
+
+            jButtons[8] = new JButton("Owca");
+            jButtons[8].setBackground(new Color(103, 103, 103));
+
+            jButtons[9] = new JButton("Wilk");
+            jButtons[9].setBackground(new Color(49, 32, 32));
+
+            jButtons[10] = new JButton("Zolw");
+            jButtons[10].setBackground(new Color(9, 58, 9));

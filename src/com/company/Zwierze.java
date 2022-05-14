@@ -79,7 +79,7 @@ public abstract class Zwierze extends Organizm{
             if(tmpPunkt2.equals(other.getPozycja())) return;
             else
             {
-                Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(getTyp(), getSwiat(), tmpPunkt2);
+                Organizm tmpOrganizm = KreatorOrganizmow.StworzOrganizm(getTyp(), getSwiat(), tmpPunkt2);
                 Komentarze.DodajKomentarz("Urodzil sie " + tmpOrganizm.OrganizmToString());
                 getSwiat().DodajOrganizm(tmpOrganizm);
                 setCzyRozmnazalSie(true);
@@ -88,7 +88,7 @@ public abstract class Zwierze extends Organizm{
         }
         else
         {
-            Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(getTyp(), getSwiat(), tmpPunkt1);
+            Organizm tmpOrganizm = KreatorOrganizmow.StworzOrganizm(getTyp(), getSwiat(), tmpPunkt1);
             Komentarze.DodajKomentarz("Urodzil sie " + tmpOrganizm.OrganizmToString());
             getSwiat().DodajOrganizm(tmpOrganizm);
             setCzyRozmnazalSie(true);

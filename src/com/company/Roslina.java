@@ -28,7 +28,7 @@ public abstract class Roslina extends Organizm{
         if(tmpPunkt1.equals(getPozycja())) return;
         else
         {
-            Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(getTyp(), getSwiat(), tmpPunkt1);
+            Organizm tmpOrganizm = KreatorOrganizmow.StworzOrganizm(getTyp(), getSwiat(), tmpPunkt1);
             Komentarze.DodajKomentarz("Wzrasta nowa roslina " + tmpOrganizm.OrganizmToString());
             getSwiat().DodajOrganizm(tmpOrganizm);
         }

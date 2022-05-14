@@ -61,7 +61,7 @@ public class Swiat {
 
         //CZLOWIEK
         Punkt pozycja = WylosujWolnePole();
-        Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(Organizm.Typ.CZLOWIEK, this, pozycja);
+        Organizm tmpOrganizm = KreatorOrganizmow.StworzOrganizm(Organizm.Typ.CZLOWIEK, this, pozycja);
         DodajOrganizm(tmpOrganizm);
         czlowiek = (Czlowiek) tmpOrganizm;
 
@@ -69,7 +69,7 @@ public class Swiat {
             pozycja = WylosujWolnePole();
             if(pozycja!= new Punkt(-1, -1))
             {
-                DodajOrganizm(KreatorOrganizmów.StworzOrganizm(Organizm.LosujTyp(), this, pozycja));
+                DodajOrganizm(KreatorOrganizmow.StworzOrganizm(Organizm.LosujTyp(), this, pozycja));
             }else return;
         }
     }

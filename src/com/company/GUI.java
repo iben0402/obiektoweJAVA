@@ -341,7 +341,7 @@ public class GUI implements ActionListener, KeyListener {
                 jList.addListSelectionListener(new ListSelectionListener() {
                        @Override
                        public void valueChanged(ListSelectionEvent e) {
-                           Organizm tmpOrganizm = KreatorOrganizmów.StworzOrganizm(typOrgList[jList.getSelectedIndex()], swiat, punkt);
+                           Organizm tmpOrganizm = KreatorOrganizmow.StworzOrganizm(typOrgList[jList.getSelectedIndex()], swiat, punkt);
                            swiat.DodajOrganizm(tmpOrganizm);
                            Komentarze.DodajKomentarz("Stworzono nowy organizm " + tmpOrganizm.OrganizmToString());
                            odswiezSwiat();

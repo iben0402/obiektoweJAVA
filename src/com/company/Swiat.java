@@ -1,9 +1,9 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Random;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 import com.company.zwierzeta.Czlowiek;
 
@@ -51,9 +51,117 @@ public class Swiat {
         this.swiatGui = swiatGui;
     }
 
-    //TODO Zapis swiata
+    public void ZapisSwiata(String nameOfFile)
+    {
+        try
+        {
+            nameOfFile += ".txt";
+            File file = new File(nameOfFile);
+            file.createNewFile();
+
+            PrintWriter pw = new PrintWriter(file);
+            pw.print(sizeX + " ");
+            pw.print(sizeY + " ");
+            pw.print(tura + " ");
+            pw.print(czlowiekZyje + " ");
+            pw.print(koniec + "\n");
+
+            for (int i = 0; i < organizmy.size(); i++) {
+                pw.print(organizmy.get(i).getTyp() + " ");
+                pw.print(organizmy.get(i).getPozycja().getX() + " ");
+                pw.print(organizmy.get(i).getPozycja().getY() + " ");
+                pw.print(organizmy.get(i).getSila() + " ");
+                pw.print(organizmy.get(i).getTuraUrodzenia() + " ");
+                pw.print(organizmy.get(i).isCzyUmarl());
+
+                if(organizmy.get(i).getTyp() == Organizm.Typ.CZLOWIEK)
+                {
+                    pw.print(" " + czlowiek.getUmiejetnosc().getCzasTrwania() + " ");
+                    pw.print(czlowiek.getUmiejetnosc().getCooldown() + " ");
+                    pw.print(czlowiek.getUmiejetnosc().isCzyJestAktywna() + " ");
+                    pw.print(czlowiek.getUmiejetnosc().isCzyMoznaAktywowac() + " ");
+                }
+                pw.println();
+            }
+            pw.close();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error: " + e);
+        }
+    }
 
     //TODO Odtwarzanie swiata
+
+    public static Swiat LadowanieSwiata(String nameOfFile)
+    {
+           try {
+               nameOfFile += ".txt";
+               File file = new File(nameOfFile);
+
+               Scanner scanner = new Scanner(file);
+               String line = scanner.nextLine();
+               String[] properties = line.split(" ");
+               int sizeX = Integer.parseInt(properties[0]);
+               int sizeY = Integer.parseInt(properties[1]);
+               Swiat tmpSwiat = new Swiat(sizeX, sizeY, null);
+
+               int tura = Integer.parseInt(properties[2]);
+               tmpSwiat.setTura(tura);
+
+               boolean czlowiekZyje = Boolean.parseBoolean(properties[3]);
+               tmpSwiat.czlowiekZyje = czlowiekZyje;
+
+               boolean koniec = Boolean.parseBoolean(properties[4]);
+               tmpSwiat.koniec = koniec;
+
+               tmpSwiat.czlowiek= null;
+
+               while (scanner.hasNextLine())
+               {
+                   line = scanner.nextLine();
+                   properties = line.split(" ");
+                   Organizm.Typ typ = Organizm.Typ.valueOf(properties[0]);
+                   int x= Integer.parseInt(properties[1]);
+                   int y= Integer.parseInt(properties[2]);
+
+                   Organizm tmpOrg = KreatorOrganizmow.StworzOrganizm(typ, tmpSwiat, new Punkt(x, y));
+
+                   int sila = Integer.parseInt(properties[3]);
+                   tmpOrg.setSila(sila);
+
+                   int turaUrodzenia = Integer.parseInt(properties[4]);
+                   tmpOrg.setTuraUrodzenia(turaUrodzenia);
+
+                   boolean czyUmarl = Boolean.parseBoolean(properties[5]);
+                   tmpOrg.setCzyUmarl(czyUmarl);
+
+                   if(typ == Organizm.Typ.CZLOWIEK)
+                   {
+                       tmpSwiat.czlowiek = (Czlowiek) tmpOrg;
+
+                       int czasTrwania = Integer.parseInt(properties[6]);
+                       int cooldown = Integer.parseInt(properties[7]);
+                       boolean czyAktywna = Boolean.parseBoolean(properties[8]);
+                       boolean czyMoznaAktywowac = Boolean.parseBoolean(properties[9]);
+
+                       tmpSwiat.czlowiek.getUmiejetnosc().setCzasTrwania(czasTrwania);
+                       tmpSwiat.czlowiek.getUmiejetnosc().setCooldown(cooldown);
+                       tmpSwiat.czlowiek.getUmiejetnosc().setCzyJestAktywna(czyAktywna);
+                       tmpSwiat.czlowiek.getUmiejetnosc().setCzyMoznaAktywowac(czyMoznaAktywowac);
+                   }
+                   tmpSwiat.DodajOrganizm(tmpOrg);
+               }
+
+               scanner.close();
+               return tmpSwiat;
+           }
+           catch (IOException e)
+           {
+               System.out.println("Error: " + e);
+           }
+           return null;
+    }
 
     public void GenerujSwiat(double zapelnienie)
     {

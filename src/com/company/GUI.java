@@ -86,10 +86,26 @@ public class GUI implements ActionListener, KeyListener {
         if(e.getSource() == load)
         {
             //TODO LADOWANIE
+            Komentarze.WyczyscKomentarz();
+            String nameOfFile = JOptionPane.showInputDialog(jframe, "Podaj nazwe pliku", "save");
+            swiat = Swiat.LadowanieSwiata(nameOfFile);
+            swiat.setSwiatGui(this);
+            plansza = new PlanszaGraphics(swiat);
+            komentator = new KomentatorGraphics();
+            oznaczenia = new Oznaczenia();
+
+            if(plansza != null) mainPanel.remove(plansza);
+            if(komentator != null) mainPanel.remove(komentator);
+            if(oznaczenia != null) mainPanel.remove(oznaczenia);
+
+            startGame();
         }
         if(e.getSource() == save)
         {
-            //TODO ZAPISYWANIE
+            String nameOfFile = JOptionPane.showInputDialog(jframe, "Podaj nazwe pliku", "save");
+            swiat.ZapisSwiata(nameOfFile);
+            Komentarze.DodajKomentarz("SWIAT ZOSTAL ZAPISANY!");
+            komentator.odswiezKomentarze();
         }
         if(e.getSource() == exit)
         {

@@ -91,8 +91,6 @@ public class Swiat {
         }
     }
 
-    //TODO Odtwarzanie swiata
-
     public static Swiat LadowanieSwiata(String nameOfFile)
     {
            try {

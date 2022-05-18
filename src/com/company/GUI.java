@@ -85,7 +85,6 @@ public class GUI implements ActionListener, KeyListener {
         }
         if(e.getSource() == load)
         {
-            //TODO LADOWANIE
             Komentarze.WyczyscKomentarz();
             String nameOfFile = JOptionPane.showInputDialog(jframe, "Podaj nazwe pliku", "save");
             swiat = Swiat.LadowanieSwiata(nameOfFile);

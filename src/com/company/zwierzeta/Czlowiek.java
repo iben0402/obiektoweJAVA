@@ -72,6 +72,27 @@ public class Czlowiek extends Zwierze {
     }
 
     @Override
+    public void Kolizja(Organizm other) {
+        if(other.CzyJestZwierzeciem() && this.getUmiejetnosc().isCzyJestAktywna())
+        {
+            TarczaAlzura(other);
+            Komentarze.DodajKomentarz(OrganizmToString() + " odrzuca atak " + other.OrganizmToString());
+        }
+        else super.Kolizja(other);
+    }
+
+    public void TarczaAlzura(Organizm other)
+    {
+        Punkt temp = LosujWolnePole(getPozycja());
+        int x = temp.getX();
+        int y = temp.getY();
+
+        getSwiat().getPlansza()[getPozycja().getY()][getPozycja().getX()] = this;
+        getSwiat().getPlansza()[y][x] = other;
+        other.setPozycja(new Punkt(x, y));
+    }
+
+    @Override
     public String TypOrganizmuToString() {
         return "Czlowiek";
     }

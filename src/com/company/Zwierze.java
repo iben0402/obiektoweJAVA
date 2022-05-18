@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.zwierzeta.Czlowiek;
+
 import java.util.Random;
 
 public abstract class Zwierze extends Organizm{
@@ -36,6 +38,11 @@ public abstract class Zwierze extends Organizm{
             Random rand = new Random();
             int tmpLos = rand.nextInt(100);
             if(tmpLos <getSzansaRozmnazania()*100) Rozmnazanie(other);
+        }
+        else if(other.getTyp() == Typ.CZLOWIEK)
+        {
+            if(getSwiat().getCzlowiek().getUmiejetnosc().isCzyJestAktywna()) getSwiat().getCzlowiek().TarczaAlzura(this);
+            Komentarze.DodajKomentarz(other.OrganizmToString() + " odpycha atak " + this.OrganizmToString());
         }
         else
         {
